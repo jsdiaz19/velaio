@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-content>
+    <button mat-raised-button color="primary" (click)="createPerson()" >Nuevo</button>
+
+    <cdk-virtual-scroll-viewport itemSize="5" class="example-viewport">
+      <div *cdkVirtualFor="let person of personList | async" class="itemPerson">
+        <div class="infoPerson">
+          <span>Nombre: {{person.name}} </span>
+          <span>Edad: {{person.age}}</span>
+          <span>Habilidades: {{ person.skills.join(',')}}</span>
+        </div>
+        <div class="action">
+          <button mat-icon-button color="primary" (click)="editPerson(person)">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button mat-icon-button color="primary" (click)="deletePerson(person)">
+            <mat-icon>delete</mat-icon>
+          </button>
+
+        </div>
+      </div>
+    </cdk-virtual-scroll-viewport>
+
+
+  </mat-card-content>
+</mat-card>
+
