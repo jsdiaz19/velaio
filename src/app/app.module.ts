@@ -11,7 +11,6 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-//import { NewPersonComponent } from './components/new-person/new-person.component';
 import {MatInputModule} from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatChipsModule} from '@angular/material/chips';
@@ -30,7 +29,6 @@ import {MatSelectModule} from '@angular/material/select';
     AppComponent,
     PersonComponent,
     TaskComponent,
-    //NewPersonComponent,
     NewTaskComponent,
     FilterPipe
   ],
