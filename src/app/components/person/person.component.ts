@@ -23,10 +23,18 @@ export class PersonComponent {
     this.dialog.open(NewPersonComponent, { width: '80vw', height:'auto', data: { edit: 0}});
   }
 
+  /**
+   * Eliminar una persona
+   * @param person Objeto persona
+   */
   deletePerson(person: person){
     this.dataService.deletePerson(person.id);
   }
 
+  /**
+   * Edita persona
+   * @param person Objeto persona
+   */
   editPerson(person: person){
     this.dialog.open(NewPersonComponent, { width: '80vw', height:'auto', data: {  person, edit:1}});
   }

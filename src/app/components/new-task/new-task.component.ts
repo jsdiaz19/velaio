@@ -7,6 +7,11 @@ import { person } from 'src/models/person.model';
 import { State, Task } from 'src/models/task.model';
 import { v4 as uuidv4 } from 'uuid';
 
+/**
+ * Validacion personalizada para permitir una cantidad minima de habilidades
+ * @param min cantida minima aceptada
+ * @returns
+ */
 export function minLengthArray(min: number): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (control instanceof FormArray) {
@@ -16,6 +21,9 @@ export function minLengthArray(min: number): ValidatorFn {
   };
 }
 
+/**
+ * Interface de input del dialogo
+ */
 export interface inputTask{
   edit: number;
   task: Task;
@@ -47,7 +55,7 @@ export class NewTaskComponent {
 
   ngOnInit(){
 
-    if( this.data.edit === 1){
+    if( this.data.edit === 1){  // En caso de edita, se llena el formulario
       this.formgroup.get('tittle')?.setValue( this.data.task.tittle);
       this.formgroup.get('description')?.setValue( this.data.task.description);
       this.formgroup.get('expired')?.setValue( this.data.task.expired);
@@ -60,24 +68,36 @@ export class NewTaskComponent {
     }
   }
 
+  /**
+   * Getter para simplificar el acceso al form array
+   */
   get personArray(): FormArray {
     return this.formgroup.get('persons') as FormArray;
   }
 
+  /**
+   * Getter para obtener las personas asignadas a la tarea
+   */
   get personArrayValue() {
     return this.formgroup.get('persons')?.getRawValue().map( (x: {person:person}) => x.person);
   }
 
+  /**
+   * Crea o edita  tareas
+   */
   createTask(){
-    if( this.data.edit === 1){ this.editTask()}
+    if( this.data.edit === 1){ this.editTask()} // En caso de edita, llama a la funcion editTask
     else {
       const formData = this.formgroup.getRawValue();
       const task = { ...formData, id: uuidv4(),state: State.ASSIGNED ,persons: formData.persons.map((x:{person: person})=> x.person.id)};
       this.dataService.addTask(task);
       this.dialogRef.close();
     }
-
   }
+
+  /**
+   * Edita tarea
+   */
   editTask() {
     const formData = this.formgroup.getRawValue();
     const task = { ...formData, id: this.data.task.id, persons: formData.persons.map((x:{person: person})=> x.person.id)};
@@ -85,20 +105,36 @@ export class NewTaskComponent {
     this.dialogRef.close();
   }
 
+  /**
+   * Funcion personalizada para la visualizacion del autocomplete
+   * @param person Objeto person
+   * @returns
+   */
   displayFn(person: person): string {
     return person && person.name ? person.name : '';
   }
 
+  /**
+   * Asigna a una persona a la tarea
+   */
   addPerson(){
     const personForm = this.fb.group({ person: [this.personControl.value]  });
     this.personArray.push(personForm);
     this.personControl.reset();
   }
 
+  /**
+   * Desasigna a una persona de la tarea
+   * @param index index de la persona a eliminar
+   */
   removePerson(index:number){
     this.personArray.removeAt(index);
   }
 
+  /**
+   * Asigna estado a la tarea
+   * @param state id del nuevo estado
+   */
   setState(state: number){
     this.formgroup.get('state')?.setValue(state);
   }

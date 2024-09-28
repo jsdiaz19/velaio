@@ -6,9 +6,7 @@
       <mat-label>Nombre:</mat-label>
       <input matInput formControlName="name"/>
       <mat-error *ngIf="formGroup.get('name')?.invalid && formGroup.get('name')?.touched">
-        <!-- Validación de campo requerido -->
         <span *ngIf="formGroup.get('name')?.hasError('required')">El nombre es requerido.</span>
-        <!-- Validación de longitud mínima -->
         <span *ngIf="formGroup.get('name')?.hasError('minlength')">
           El nombre debe tener al menos 5 caracteres.
         </span>
@@ -19,9 +17,7 @@
       <mat-label>Edad:</mat-label>
       <input matInput formControlName="age"/>
       <mat-error *ngIf="formGroup.get('age')?.invalid && formGroup.get('age')?.touched">
-        <!-- Validación de campo requerido -->
         <span *ngIf="formGroup.get('age')?.hasError('required')">La edad es requerida.</span>
-        <!-- Validación de longitud mínima -->
         <span *ngIf="formGroup.get('age')?.hasError('min')">
           Debe ser mayor de 18 años
         </span>

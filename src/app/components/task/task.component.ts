@@ -17,14 +17,25 @@ export class TaskComponent {
     this.$observableTask = this.dataService.getListTask();
   }
 
+  /**
+   * Crea una nueva tarea
+   */
   createTask(){
     this.dialog.open(NewTaskComponent, { width: '80vw', height:'auto', data: { edit: 0}})
   }
 
+  /**
+   * Elimina una tarea
+   * @param id id de la tarea a eliminar
+   */
   deleteTask(id:string){
     this.dataService.deleteTask(id);
   }
 
+  /**
+   * Edita tarea
+   * @param task Objeto tarea
+   */
   editTask(task:Task){
     this.dialog.open(NewTaskComponent, { width: '80vw', height:'auto', data: { edit: 1, task}})
   }

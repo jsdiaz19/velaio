@@ -55,7 +55,7 @@ export class NewPersonComponent {
   }
 
   ngOnInit(){
-    if( this.data.edit === 1){
+    if( this.data.edit === 1){ // En caso de editar, se llena el formulario con los datos de la persona
       this.formGroup.get('name')?.setValue(this.data.person.name);
       this.formGroup.get('age')?.setValue(this.data.person.age);
       this.data.person.skills.forEach((skill)=> this.skillsArray.push( this.fb.group({ skill: [skill]  })))
@@ -63,27 +63,38 @@ export class NewPersonComponent {
 
   }
 
+  /**
+   * Getter para simplificar el acceso al form array
+   */
   get skillsArray(): FormArray {
     return this.formGroup.get('skills') as FormArray;
   }
 
-
+  /**
+   * Elimina una habilidad especifica
+   * @param index index de la habilidad a eliminar
+   */
   remove(index: number): void {
     this.skillsArray.removeAt(index);
   }
 
+  /**
+   * Agrega la habilidad del usuario al form array
+   * @param $event evento matChip donde se obtiene la habilidad a agregar
+   */
   add($event: MatChipInputEvent){
-    const habilidadForm = this.fb.group({
-      skill: [$event.value],
-    });
+    const habilidadForm = this.fb.group({ skill: [$event.value]  });
     this.skillsArray.push(habilidadForm);
     $event.chipInput!.clear();
 
   }
 
+  /**
+   * Crea o edita persona en el sistema
+   */
   createPerson(){
     let formData = this.formGroup.getRawValue();
-    if( this.data.edit === 0){
+    if( this.data.edit === 0){ // Bandera para crear persona
       const person = { id: uuidv4(), name: formData.name, age: formData.age, skills: formData.skills.map((skills:any)=> skills.skill)}
       this.dataService.addPerson(person);
     }else{
