@@ -1,1 +1,42 @@
-<p>task works!</p>
+<mat-card>
+  <mat-card-content>
+    <div class="toolContainer">
+      <button mat-raised-button color="primary" (click)="createTask()">Nuevo</button>
+
+      <mat-form-field>
+        <mat-label>Estado</mat-label>
+        <mat-select #filterState [value]="-1">
+          <mat-option [value]="-1">Todos</mat-option>
+          <mat-option [value]="1"> Completado</mat-option>
+          <mat-option [value]="3"> Asignado</mat-option>
+          <mat-option [value]="2"> En progreso</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+
+    <cdk-virtual-scroll-viewport itemSize="5" class="example-viewport">
+      <div *cdkVirtualFor="let task of $observableTask | async  | filter: filterState.value" class="itemPerson" >
+        <div class="infoPerson">
+          <span>Id: {{task.id}} </span>
+          <span>Titulo: {{task.tittle}} </span>
+          <span>Descripcion: {{task.description}}</span>
+        </div>
+        <div class="action">
+          <button mat-icon-button color="primary" (click)="editTask(task)">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button mat-icon-button color="primary" (click)="deleteTask(task.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+
+        </div>
+
+      </div>
+    </cdk-virtual-scroll-viewport>
+
+
+  </mat-card-content>
+</mat-card>

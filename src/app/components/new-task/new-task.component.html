@@ -1,0 +1,63 @@
+<h1 mat-dialog-title>Crear tarea</h1>
+<mat-dialog-content>
+  <form [formGroup]="formgroup" class="formContainer" (ngSubmit)="createTask()" id="formPerson">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Titulo:</mat-label>
+      <input matInput formControlName="tittle"/>
+      <mat-error *ngIf="formgroup.get('tittle')?.hasError('required')">El titulo es requerido.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Descripcion:</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+      <mat-error *ngIf="formgroup.get('description')?.hasError('required')">El titulo es requerido.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Fecha limite:</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="expired" [min]="minDate">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="formgroup.get('expired')?.hasError('required')">El titulo es requerido.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Participantes:</mat-label>
+      <input matInput [matAutocomplete]="auto" [formControl]="personControl" (click)="personArray.markAsTouched()"/>
+
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="addPerson()">
+        <mat-option *ngFor="let person of $observablePerson | async" [value]="person" [disabled]="personArrayValue.indexOf(person)!== -1">
+          {{person.name}}
+        </mat-option>
+      </mat-autocomplete>
+
+    </mat-form-field>
+
+    <mat-chip-listbox >
+      <mat-chip-option *ngFor="let person of personArray.controls; let i = index" >
+        {{person.value.person.name}}
+        <button matChipRemove  (click)="removePerson(i)">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-option>
+    </mat-chip-listbox>
+
+    <mat-error *ngIf="personArray.invalid && personArray.touched">
+      <span>Debe tener al menos un participante asignado</span>
+    </mat-error>
+
+    <div *ngIf="data.edit === 1">
+      <mat-checkbox class="example-margin" [checked]="formgroup.get('state')?.value === stateTask.ASSIGNED" (change)="setState(stateTask.ASSIGNED)">ASIGNADO</mat-checkbox>
+      <mat-checkbox class="example-margin" [checked]="formgroup.get('state')?.value === stateTask.PROGRESS" (change)="setState(stateTask.PROGRESS)">EN PROGRESO</mat-checkbox>
+      <mat-checkbox class="example-margin" [checked]="formgroup.get('state')?.value === stateTask.COMPLETED" (change)="setState(stateTask.COMPLETED)">COMPLETO</mat-checkbox>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button type="submit" [disabled]="!formgroup.valid" form="formPerson">{{data.edit ===1 ? 'Editar' : 'Crear'}}</button>
+  <button mat-button mat-dialog-close >Cancelar</button>
+</mat-dialog-actions>
+

@@ -20,7 +20,7 @@ export class PersonComponent {
    * Crear una nueva persona
    */
   createPerson(){
-    this.dialog.open(NewPersonComponent, { width: '40%', height:'50%', data: { edit: 0}});
+    this.dialog.open(NewPersonComponent, { width: '80vw', height:'auto', data: { edit: 0}});
   }
 
   deletePerson(person: person){
@@ -28,6 +28,6 @@ export class PersonComponent {
   }
 
   editPerson(person: person){
-    this.dialog.open(NewPersonComponent, { width: '40%', height:'50%', data: {  person, edit:1}});
+    this.dialog.open(NewPersonComponent, { width: '80vw', height:'auto', data: {  person, edit:1}});
   }
 }

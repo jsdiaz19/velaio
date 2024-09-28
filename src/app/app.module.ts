@@ -11,19 +11,28 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import { NewPersonComponent } from './components/new-person/new-person.component';
+//import { NewPersonComponent } from './components/new-person/new-person.component';
 import {MatInputModule} from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { NewTaskComponent } from './components/new-task/new-task.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { FilterPipe } from './pipes/filter/filter.pipe';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
     AppComponent,
     PersonComponent,
     TaskComponent,
-    NewPersonComponent
+    //NewPersonComponent,
+    NewTaskComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -39,6 +48,11 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     MatChipsModule,
     ScrollingModule,
     MatIconModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatSelectModule,
     AppRoutingModule
   ],
   providers: [],
